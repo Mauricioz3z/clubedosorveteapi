@@ -1,86 +1,45 @@
 'use strict'
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with feeds
- */
-
 const Feed = use('App/Models/Feed')
 class FeedController {
-  /**
-   * Show a list of all feeds.
-   * GET feeds
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
-      
+
+  async index({ request, response }) {
     const feed = Feed.all()
-
     return feed
-
   }
 
-
-
-  /**
-   * Create/save a new feed.
-   * POST feeds
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async store({ request }) {
+    const data = request.only(["comment", "title"]) 
+    const feed = await Feed.create(data)
+    return feed
   }
 
-  /**
-   * Display a single feed.
-   * GET feeds/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+  async show({ params}) {
 
-
-
-  /**
-   * Update feed details.
-   * PUT or PATCH feeds/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a feed with id.
-   * DELETE feeds/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+     
     const feed = await Feed.findOrFail(params.id)
 
-    if (feed.user_id !== auth.user.id) {
-      return response.status(401).send({ error: 'Not authorized' })
-    }
-  
-    await feed.delete()
+    return feed;
+  }
+
+  async update({ params,request}) {
+    const data = request.only(["comment", "title"]) 
+
+    const feed = await Feed.findOrFail(params.id)
+          feed.comment=data.comment
+          feed.title=data.title
+          feed.save();
+    return feed;
+  }
+
+  async destroy({ params }) {
+    const feed = await Feed.findOrFail(params.id)
+    
+    
+    // if (feed.user_id !== auth.user.id) {
+    //   return response.status(401).send({ error: 'Not authorized' })
+    // }
+
+    return await feed.delete()
   }
 }
 
