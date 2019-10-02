@@ -1,2 +1,1 @@
-# clubedosorveteapi
-API Clube Do Sorvete
+# Clube do Sorverte API
