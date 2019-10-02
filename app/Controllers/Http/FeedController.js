@@ -2,9 +2,12 @@
 const Feed = use('App/Models/Feed')
 class FeedController {
 
-  async index({ request, response }) {
-    const feed = Feed.all()
-    return feed
+  async index({ params,request, response }) {
+    const page = request.get().page || 1
+ 
+    const feed = await Feed.query().paginate(page)
+    // const feed = Feed.all()
+     return feed
   }
 
   async store({ request }) {
