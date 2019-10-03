@@ -1,0 +1,12 @@
+  // var chance = new Chance();
+
+  //   for (var i = 0; i < 10000; i++) {
+  //     const feed = await Feed.create({title:chance.name(),comment:chance.paragraph().substring(0,240)})
+  //     console.log('criado'+i)
+  //  }
+  //  return  'ok'
+
+//destroy
+   // if (feed.user_id !== auth.user.id) {
+    //   return response.status(401).send({ error: 'Not authorized' })
+    // }

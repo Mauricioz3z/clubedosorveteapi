@@ -8,3 +8,7 @@ Route.post('/sessions', 'SessionController.create')
 Route.resource('feed', 'FeedController')
   .apiOnly()
   .middleware('auth')
+
+  Route.resource('shop', 'ShopController')
+  .apiOnly()
+  .middleware('auth')
