@@ -7,6 +7,10 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
+  feed () {
+    return this.hasMany('App/Models/Feed')
+  }
+
   static boot () {
     super.boot()
 

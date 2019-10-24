@@ -5,16 +5,18 @@ class FeedController {
 
   async index({request}) {
     const page = request.get().page || 1
-    const feed = await Feed.query().paginate(page)
+    const feed = await Feed.query().with('user').paginate(page)
     return feed
   }
 
-  async store({ request }) {
+  async store({ request,auth }) {
 
-    const data = request.only(["comment", "title"])
-    const feed = await Feed.create(data)
+    const {comment,title} = request.all();//only(["comment", "title"])
+    const feed = await Feed.create({user_id:auth.user.id,comment:comment,title:title})
+    
     return feed
   }
+
   async show({ params }) {
     const feed = await Feed.findOrFail(params.id)
     return feed;
